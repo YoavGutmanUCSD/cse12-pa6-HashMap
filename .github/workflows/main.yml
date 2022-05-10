@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: run make
-        run: make testHash
+        run: make -C pa6-starter/ testHash
 
   testFileSystem:
     # The type of runner that the job will run on
@@ -40,7 +40,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: run make
-        run: make testFileSystem
+        run: make -C pa6-starter/ testFileSystem
 
   testFileData:
     # The type of runner that the job will run on
@@ -53,4 +53,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: run make
-        run: make testFileData
+        run: make -C pa6-starter/ testFileData
