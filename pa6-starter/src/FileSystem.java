@@ -3,18 +3,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+// This class will be used to represent the entire structure of the file system.
 public class FileSystem {
 
     MyHashMap<String, ArrayList<FileData>> nameMap;
     MyHashMap<String, ArrayList<FileData>> dateMap;
 
-    // TODO
+    // Default constructor that creates a new FileSystem object and initializes its instance variable.
     public FileSystem() {
         nameMap = new MyHashMap();
         dateMap = new MyHashMap();
     }
 
-    // TODO
+    // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
     public FileSystem(String inputFile) {
         // add stuff
         try {
@@ -42,7 +43,11 @@ public class FileSystem {
         }
     }
 
-    // TODO
+    // This method should create a FileData object with the given file information and 
+    // add it to the instance variables of FileSystem. 
+
+    // This method should return true if the file is successfully added to the FileSystem, and 
+    // false if a file with the same name already exists in that directory
     public boolean add(String fileName, String directory, String modifiedDate) {
         // make the file..
         ArrayList<FileData> someFiles = new ArrayList();
@@ -57,8 +62,7 @@ public class FileSystem {
 
     }
 
-    // TODO
-    // POTENTIAL ERROR HERE: WHEN IT HAS THE SAME NAME TWICE. use the datemap in this case, fix later...
+    // This method should return a single FileData object with the given name and directory
     public FileData findFile(String name, String directory) {
         ArrayList<String> allNames = new ArrayList<String>(dateMap.keys());
 
@@ -87,14 +91,15 @@ public class FileSystem {
         return null;
     }
 
-    // TODO
+    // This method should return an array list of string that represents all unique file names
+    //  across all directories within the fileSystem
     public ArrayList<String> findAllFilesName() {
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
         return allNames;
     }
 
-    // TODO
-    // POTENTIAL ERROR HERE: WHEN IT HAS THE SAME NAME TWICE. use the datemap in this case, fix later...
+    // The find method should return a list of FileData with the given name. 
+    // Should not modify the FileSystem itself. Return an empty list if such a file does not exist.
     public ArrayList<FileData> findFilesByName(String name) {
         ArrayList<FileData> returnable = new ArrayList();
 
@@ -120,7 +125,7 @@ public class FileSystem {
         return returnable;
     }
 
-    // TODO
+    // This find method should return a list of FileData with the given modifiedDate.
     public ArrayList<FileData> findFilesByDate(String modifiedDate) {
         ArrayList<FileData> returnable = new ArrayList();
 
@@ -146,7 +151,8 @@ public class FileSystem {
         return returnable;
     }
 
-    // TODO
+    // This find method should return a list of FileData with the given modifiedDate that has at least another 
+    // file with the same file name in a different directory
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
         ArrayList<FileData> filesByDate = findFilesByDate(modifiedDate);
         ArrayList<FileData> returnable = new ArrayList();
@@ -175,7 +181,7 @@ public class FileSystem {
 
     }
 
-    // TODO
+    // This method should remove all the files with the given name in the FileSystem. Return true if success, false otherwise
     public boolean removeByName(String name) {
         boolean isRemovedDate = false;
         boolean isRemovedName = nameMap.remove(name);
@@ -199,7 +205,8 @@ public class FileSystem {
         return (isRemovedDate && isRemovedName);
     }
 
-    // TODO
+    // This method should remove a certain file with the given name and directory. 
+    // Return true if success, false otherwise.
     public boolean removeFile(String name, String directory) {
         boolean isNameRemoved = removeByName(name);
         /////////////////
