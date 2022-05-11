@@ -11,13 +11,14 @@ public class FileSystem {
 
     // Default constructor that creates a new FileSystem object and initializes its instance variable.
     public FileSystem() {
-        nameMap = new MyHashMap();
-        dateMap = new MyHashMap();
+        this.nameMap = new MyHashMap();
+        this.dateMap = new MyHashMap();
     }
 
     // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
     public FileSystem(String inputFile) {
-        // add stuff
+        this.nameMap = new MyHashMap();
+        this.dateMap = new MyHashMap();
         try {
             File f = new File(inputFile);
             Scanner sc = new Scanner(f);
@@ -209,11 +210,9 @@ public class FileSystem {
     // Return true if success, false otherwise.
     public boolean removeFile(String name, String directory) {
         boolean isNameRemoved = removeByName(name);
-        /////////////////
 
         boolean isRemovedDate = false;
         boolean isRemovedName = dateMap.remove(directory);
-
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
 
         for (int i = 0; i < allNames.size(); i++) {
