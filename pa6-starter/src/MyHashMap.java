@@ -58,6 +58,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
                 HashMapEntry valToInsert = new HashMapEntry(key, value);
                 buckets[index] = new LinkedList<HashMapEntry<K,V>>();
                 buckets[index].add(valToInsert);
+                size++;
                 return true;
             }
             return false;
@@ -65,6 +66,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             if(get(key) == null) {
                 return false;
             }
@@ -82,12 +86,29 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public boolean remove(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
+            if(get(key) == null) {
+                return false;
+            }
+            int keyHash = Objects.hashCode(key); 
+            int index = keyHash % capacity;
+            for(HashMapEntry e: buckets[index]){
+                if(e.getKey().equals(key)){
+                    e = null;
+                    size--;
+                    return true;
+                }
+            }
+            return false;
 	}
 
 	@Override
 	public void set(K key, V value) throws IllegalArgumentException {
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             if(get(key) == null) {
                 put(key, value);
             }
@@ -99,6 +120,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public V get(K key) throws IllegalArgumentException {
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             int keyHash = Objects.hashCode(key); 
             int index = keyHash % capacity;
             // loop runs only once on average
@@ -125,6 +149,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public boolean containsKey(K key) throws IllegalArgumentException {
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             // TODO Auto-generated method stub
             // int keyHash = Objects.hashCode(key);
             return get(key) != null;
