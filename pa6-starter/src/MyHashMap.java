@@ -53,7 +53,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (get(key) == null){
                 // value to insert stored in HashMapEntry
                 HashMapEntry valToInsert = new HashMapEntry(key, value);
-
+                buckets[index] = new LinkedList<HashMapEntry<K,V>>();
                 buckets[index].add(valToInsert);
                 return true;
             }
