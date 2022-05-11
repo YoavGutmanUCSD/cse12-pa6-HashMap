@@ -48,6 +48,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public boolean put(K key, V value) throws IllegalArgumentException {
             // hashing information
             // can also use key.hashCode() assuming key is not null
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             int keyHash = Objects.hashCode(key); 
             int index = keyHash % capacity;
             if (get(key) == null){
@@ -73,7 +76,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
                     e.setValue(newValue);
                     return true;
                 }
-
             }
             return false;
 	}
