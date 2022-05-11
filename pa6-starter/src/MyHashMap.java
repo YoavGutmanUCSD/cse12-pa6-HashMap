@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class MyHashMap<K, V> implements DefaultMap<K, V> {
@@ -34,24 +35,43 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		// TODO Finish initializing instance fields
 
 		// if you use Separate Chaining
-		buckets = (List<HashMapEntry<K, V>>[]) new List<?>[capacity];
+		buckets = (List<HashMapEntry<K, V>>[]) new LinkedList[capacity];
 
-		// if you use Linear Probing
-		entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+		// // if you use Linear Probing (i won't)
+		// entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
 	}
 
 	@Override
 	public boolean put(K key, V value) throws IllegalArgumentException {
-		// can also use key.hashCode() assuming key is not null
-		int keyHash = Objects.hashCode(key); 
-		// TODO Auto-generated method stub
-		return false;
+            // hashing information
+            // can also use key.hashCode() assuming key is not null
+            int keyHash = Objects.hashCode(key); 
+            int index = keyHash % buckets.length;
+            if (get(key) == null){
+                // value to insert stored in HashMapEntry
+                HashMapEntry valToInsert = new HashMapEntry(key, value);
+
+                buckets[keyHash].add(valToInsert);
+                return true;
+            }
+            return false;
 	}
 
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+            if(get(key) == null) {
+                return false;
+            }
+            int keyHash = Objects.hashCode(key);
+            // this should run only once for the majority of cases. Average O(1), worst case O(n).
+            for(HashMapEntry e: buckets[keyHash]){
+                if (e.getKey().equals(key)) {
+                    e.setValue(newValue);
+                    return true;
+                }
+
+            }
+            return false;
 	}
 
 	@Override
@@ -62,38 +82,58 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public void set(K key, V value) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+            if(get(key) == null) {
+                put(key, value);
+            }
+            else {
+                replace(key, value);
+            }
 		
 	}
 
 	@Override
 	public V get(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+            int keyHash = Objects.hashCode(key);
+            // loop runs only once on average
+            if(buckets[keyHash] != null) {
+                for(HashMapEntry e: buckets[keyHash]){
+                    if (e.getKey().equals(key)) {
+                        return (V) e.getValue();
+                    }
+
+                }
+            }
+            return null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.size == 0;
 	}
 
 	@Override
 	public boolean containsKey(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+            // TODO Auto-generated method stub
+            // int keyHash = Objects.hashCode(key);
+            return get(key) != null;
 	}
 
 	@Override
 	public List<K> keys() {
-		// TODO Auto-generated method stub
-		return null;
+            List<K> allKeys = new LinkedList<K>();
+            for(List<HashMapEntry<K,V>> e: buckets){
+                if(e != null){
+                    for(HashMapEntry entry: e){
+                        allKeys.add((K) entry.getKey());
+                    }
+                }
+            }
+            return allKeys;
 	}
 	
 	private static class HashMapEntry<K, V> implements DefaultMap.Entry<K, V> {
