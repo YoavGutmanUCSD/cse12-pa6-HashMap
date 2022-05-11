@@ -17,6 +17,20 @@ public class FileSystemTest {
 
         ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/06/2021");
         
+        assertEquals(filesByDate.size(), 1);
+
+    }
+
+    @Test
+    public void properRemoval() {
+        String input = "input.txt";
+
+        FileSystem newFileSystem = new FileSystem(input);
+
+        newFileSystem.removeFile("mySample.txt", "02/06/2021");
+        
+        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/06/2021");
+
         assertEquals(filesByDate.size(), 2);
 
     }

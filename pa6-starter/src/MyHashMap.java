@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Objects;
 
+
+// ADD HEADER COMMENTS :(
 public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public static final double DEFAULT_LOAD_FACTOR = 0.75;
 	public static final int DEFAULT_INITIAL_CAPACITY = 16;

@@ -5,9 +5,16 @@ import org.junit.*;
 public class FileDataTest {
 
     @Test
-    public void testerOne() {
+    public void toStringTester() {
+        FileData obj = new FileData("IAmAFile", "Path", "Today");
+        //System.out.print(obj);
+        assertEquals("{Name: " + "IAmAFile" + ", Directory: " + "Path" +", Modified Date: "+ "Today" +"}.", obj.toString());
+    }
+
+    @Test
+    public void properCreation() {
         FileData obj = new FileData("IAmAFile", "Path", "Today");
         System.out.print(obj);
-        assertEquals(1,2);
+        assertEquals(obj.name, "IAmAFile");
     }
 }
