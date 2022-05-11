@@ -35,6 +35,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		// TODO Finish initializing instance fields
 
 		// if you use Separate Chaining
+                this.capacity = initialCapacity;
+                this.size = 0;
+                this.loadFactor = loadFactor;
 		buckets = (List<HashMapEntry<K, V>>[]) new LinkedList[capacity];
 
 		// // if you use Linear Probing (i won't)
@@ -45,13 +48,16 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public boolean put(K key, V value) throws IllegalArgumentException {
             // hashing information
             // can also use key.hashCode() assuming key is not null
+            if (key == null) {
+                throw new IllegalArgumentException("Key cannot be null.");
+            }
             int keyHash = Objects.hashCode(key); 
-            int index = keyHash % buckets.length;
+            int index = keyHash % capacity;
             if (get(key) == null){
                 // value to insert stored in HashMapEntry
                 HashMapEntry valToInsert = new HashMapEntry(key, value);
-
-                buckets[keyHash].add(valToInsert);
+                buckets[index] = new LinkedList<HashMapEntry<K,V>>();
+                buckets[index].add(valToInsert);
                 return true;
             }
             return false;
@@ -62,14 +68,14 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if(get(key) == null) {
                 return false;
             }
-            int keyHash = Objects.hashCode(key);
+            int keyHash = Objects.hashCode(key); 
+            int index = keyHash % capacity;
             // this should run only once for the majority of cases. Average O(1), worst case O(n).
-            for(HashMapEntry e: buckets[keyHash]){
+            for(HashMapEntry e: buckets[index]){
                 if (e.getKey().equals(key)) {
                     e.setValue(newValue);
                     return true;
                 }
-
             }
             return false;
 	}
@@ -93,10 +99,11 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 
 	@Override
 	public V get(K key) throws IllegalArgumentException {
-            int keyHash = Objects.hashCode(key);
+            int keyHash = Objects.hashCode(key); 
+            int index = keyHash % capacity;
             // loop runs only once on average
-            if(buckets[keyHash] != null) {
-                for(HashMapEntry e: buckets[keyHash]){
+            if(buckets[index] != null) {
+                for(HashMapEntry e: buckets[index]){
                     if (e.getKey().equals(key)) {
                         return (V) e.getValue();
                     }
