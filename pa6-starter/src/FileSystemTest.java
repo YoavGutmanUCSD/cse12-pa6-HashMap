@@ -11,7 +11,7 @@ public class FileSystemTest {
 
     @Test
     public void properAdding() {
-        String input = "C:/Users/anima/OneDrive/Documents/GitHub/cse12-pa6-HashMap/pa6-starter/src/input.txt";
+        String input = new File("input.txt").getAbsolutePath();
 
         FileSystem newFileSystem = new FileSystem(input);
 
