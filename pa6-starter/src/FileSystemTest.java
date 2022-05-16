@@ -11,7 +11,7 @@ public class FileSystemTest {
 
     @Test
     public void properAdding() {
-        String input = "input.txt";
+        String input = "C:/Users/anima/OneDrive/Documents/GitHub/cse12-pa6-HashMap/pa6-starter/src/input.txt";
 
         FileSystem newFileSystem = new FileSystem(input);
 
@@ -33,5 +33,16 @@ public class FileSystemTest {
 
         assertEquals(filesByDate.size(), 2);
 
+    }
+
+
+    @Test
+    public void canYouGetTheseNames() {
+        String input = "input.txt";
+
+        FileSystem newFileSystem = new FileSystem(input);
+
+        ArrayList<String> allNames = newFileSystem.findAllFilesName();
+        
     }
 }

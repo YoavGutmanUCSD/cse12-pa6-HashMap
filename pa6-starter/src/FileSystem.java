@@ -28,14 +28,13 @@ public class FileSystem {
                 String[] data = sc.nextLine().split(", ");
 
                 // adding this file's info to the filesystem
-                ArrayList<FileData> someFiles = new ArrayList();
+                ArrayList<FileData> someFiles = new ArrayList<FileData>();
                 FileData oneFile = new FileData(data[0], data[1], data[2]);
                 someFiles.add(oneFile);
 
                 // each map gets one!
                 nameMap.put(oneFile.name, someFiles);
                 dateMap.put(oneFile.lastModifiedDate, someFiles);
-
             }
             sc.close();
 
@@ -51,7 +50,7 @@ public class FileSystem {
     // false if a file with the same name already exists in that directory
     public boolean add(String fileName, String directory, String modifiedDate) {
         // make the file..
-        ArrayList<FileData> someFiles = new ArrayList();
+        ArrayList<FileData> someFiles = new ArrayList<FileData>();
         FileData oneFile = new FileData(fileName, directory, modifiedDate);
         someFiles.add(oneFile);
 
@@ -102,7 +101,7 @@ public class FileSystem {
     // The find method should return a list of FileData with the given name. 
     // Should not modify the FileSystem itself. Return an empty list if such a file does not exist.
     public ArrayList<FileData> findFilesByName(String name) {
-        ArrayList<FileData> returnable = new ArrayList();
+        ArrayList<FileData> returnable = new ArrayList<FileData>();
 
         ArrayList<String> allNames = new ArrayList<String>(dateMap.keys());
 
@@ -128,19 +127,23 @@ public class FileSystem {
 
     // This find method should return a list of FileData with the given modifiedDate.
     public ArrayList<FileData> findFilesByDate(String modifiedDate) {
-        ArrayList<FileData> returnable = new ArrayList();
+        ArrayList<FileData> returnable = new ArrayList<FileData>();
 
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
 
         // first checking if the filesystem contains this key
         if(dateMap.containsKey(modifiedDate)) {
 
+            // if it does, i can use the nameMap and loop through the keys there
+            // & check each date that matches modifiedDate
             for (int i = 0; i < allNames.size(); i++) {
+                System.out.println(allNames.size());
                 String aKey = allNames.get(i);
                 ArrayList<FileData> someFiles = nameMap.get(aKey);
 
-                // if it does contain the key, loop through the object array that is its value
+                // for this key in nameMap, check its modifiedDate, see if it equals the same
                 for (int j = 0; j < someFiles.size(); i++) {
+                    System.out.println(someFiles.size());
                     FileData someFile = someFiles.get(j);
                     if (someFile.lastModifiedDate.equals(modifiedDate)) {
                         returnable.add(someFile); }
@@ -156,7 +159,7 @@ public class FileSystem {
     // file with the same file name in a different directory
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
         ArrayList<FileData> filesByDate = findFilesByDate(modifiedDate);
-        ArrayList<FileData> returnable = new ArrayList();
+        ArrayList<FileData> returnable = new ArrayList<FileData>();
 
         for (int i = 0; i < filesByDate.size(); i++) {
             FileData firstLoopFile = filesByDate.get(i);
