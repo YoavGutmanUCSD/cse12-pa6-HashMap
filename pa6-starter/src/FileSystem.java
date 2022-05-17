@@ -25,7 +25,8 @@ public class FileSystem {
 
             // each line contains the file's info
             while (sc.hasNextLine()) {
-                String[] data = sc.nextLine().split(", ");
+                String nextLine = sc.nextLine();
+                String[] data = nextLine.split(", ");
                 // System.out.println(data);
 
                 // adding this file's info to the filesystem
