@@ -11,7 +11,7 @@ public class FileSystemTest {
 
     @Test
     public void properAdding() {
-        String input = new File("input.txt").getAbsolutePath();
+        String input = new File("src/input.txt").getAbsolutePath();
 
         FileSystem newFileSystem = new FileSystem(input);
 
@@ -23,7 +23,7 @@ public class FileSystemTest {
 
     @Test
     public void properRemoval() {
-        String input = "input.txt";
+        String input = new File("src/input.txt").getAbsolutePath();
 
         FileSystem newFileSystem = new FileSystem(input);
 
@@ -38,7 +38,7 @@ public class FileSystemTest {
 
     @Test
     public void canYouGetTheseNames() {
-        String input = "input.txt";
+        String input = new File("src/input.txt").getAbsolutePath();
 
         FileSystem newFileSystem = new FileSystem(input);
 

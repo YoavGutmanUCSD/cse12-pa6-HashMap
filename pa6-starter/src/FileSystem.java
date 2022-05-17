@@ -26,6 +26,7 @@ public class FileSystem {
             // each line contains the file's info
             while (sc.hasNextLine()) {
                 String[] data = sc.nextLine().split(", ");
+                // System.out.println(data);
 
                 // adding this file's info to the filesystem
                 ArrayList<FileData> someFiles = new ArrayList<FileData>();
@@ -35,6 +36,7 @@ public class FileSystem {
                 // each map gets one!
                 nameMap.put(oneFile.name, someFiles);
                 dateMap.put(oneFile.lastModifiedDate, someFiles);
+                System.out.format("name: date\n%s: %s\n", oneFile.name, nameMap.get(oneFile.name));
             }
             sc.close();
 
@@ -68,13 +70,14 @@ public class FileSystem {
 
         // first checking if the filesystem contains this key
         if(nameMap.containsKey(name)) {
+            System.out.println("This ran");
 
             for (int i = 0; i < allNames.size(); i++) {
                 String aKey = allNames.get(i);
                 ArrayList<FileData> someFiles = dateMap.get(aKey);
 
                 // if it does contain the key, loop through the object array that is its value
-                for (int j = 0; j < someFiles.size(); i++) {
+                for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
 
                     // if the directory is the same as well (same as the name), return the file
@@ -113,7 +116,7 @@ public class FileSystem {
                 ArrayList<FileData> someFiles = dateMap.get(aKey);
 
                 // if it does contain the key, loop through the object array that is its value
-                for (int j = 0; j < someFiles.size(); i++) {
+                for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
                     if (someFile.name.equals(name)) {
                         returnable.add(someFile); }
@@ -137,13 +140,15 @@ public class FileSystem {
             // if it does, i can use the nameMap and loop through the keys there
             // & check each date that matches modifiedDate
             for (int i = 0; i < allNames.size(); i++) {
-                System.out.println(allNames.size());
+                // System.out.println(allNames.size());
+                // System.out.println("FIRST FOR");
                 String aKey = allNames.get(i);
                 ArrayList<FileData> someFiles = nameMap.get(aKey);
 
                 // for this key in nameMap, check its modifiedDate, see if it equals the same
-                for (int j = 0; j < someFiles.size(); i++) {
-                    System.out.println(someFiles.size());
+                for (int j = 0; j < someFiles.size(); j++) {
+                    // System.out.println(someFiles.size());
+                    // System.out.println("SECOND FOR");
                     FileData someFile = someFiles.get(j);
                     if (someFile.lastModifiedDate.equals(modifiedDate)) {
                         returnable.add(someFile); }
@@ -166,7 +171,7 @@ public class FileSystem {
             String firstLoopFileName = firstLoopFile.name;
             String firstLoopFileDir = firstLoopFile.dir;
             
-            for (int j = 0; j < filesByDate.size(); i++) {
+            for (int j = 0; j < filesByDate.size(); j++) {
                 FileData secondLoopFile = filesByDate.get(j);
                 String secondLoopFileName = secondLoopFile.name;
                 String secondLoopFileDir = secondLoopFile.dir;
@@ -197,7 +202,7 @@ public class FileSystem {
             ArrayList<FileData> someFiles = dateMap.get(aKey);
 
                 // if it does contain the key, loop through the object array that is its value
-                for (int j = 0; j < someFiles.size(); i++) {
+                for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
                    if (someFile.name.equals(name)) {
                        dateMap.remove(aKey);
@@ -223,7 +228,7 @@ public class FileSystem {
             ArrayList<FileData> someFiles = nameMap.get(aKey);
 
                 // if it does contain the key, loop through the object array that is its value
-                for (int j = 0; j < someFiles.size(); i++) {
+                for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
                    if (someFile.name.equals(directory)) {
                         nameMap.remove(aKey);
