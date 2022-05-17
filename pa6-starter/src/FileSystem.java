@@ -66,14 +66,14 @@ public class FileSystem {
 
     // This method should return a single FileData object with the given name and directory
     public FileData findFile(String name, String directory) {
-        ArrayList<String> allNames = new ArrayList<String>(dateMap.keys());
+        ArrayList<String> allDates = new ArrayList<String>(dateMap.keys());
 
         // first checking if the filesystem contains this key
         if(nameMap.containsKey(name)) {
-            System.out.println("This ran");
+            //System.out.println("This ran");
 
-            for (int i = 0; i < allNames.size(); i++) {
-                String aKey = allNames.get(i);
+            for (int i = 0; i < allDates.size(); i++) {
+                String aKey = allDates.get(i);
                 ArrayList<FileData> someFiles = dateMap.get(aKey);
 
                 // if it does contain the key, loop through the object array that is its value
@@ -81,7 +81,7 @@ public class FileSystem {
                     FileData someFile = someFiles.get(j);
 
                     // if the directory is the same as well (same as the name), return the file
-                    if(someFile.dir.equals(directory)) {
+                    if(someFile.dir.equals(directory) && someFile.name.equals(name)) {
                         return someFile;
                     }
                 }
@@ -195,18 +195,19 @@ public class FileSystem {
         boolean isRemovedDate = false;
         boolean isRemovedName = nameMap.remove(name);
 
-        ArrayList<String> allNames = new ArrayList<String>(dateMap.keys());
+        // every key in date map..
+        ArrayList<String> allDateMapKeys = new ArrayList<String>(dateMap.keys());
 
-        for (int i = 0; i < allNames.size(); i++) {
-            String aKey = allNames.get(i);
+        for (int i = 0; i < allDateMapKeys.size(); i++) {
+            String aKey = allDateMapKeys.get(i);
             ArrayList<FileData> someFiles = dateMap.get(aKey);
 
-                // if it does contain the key, loop through the object array that is its value
+                // if this key has the specified name, REMOVE IT
                 for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
                    if (someFile.name.equals(name)) {
-                       dateMap.remove(aKey);
-                       isRemovedDate = true;
+                    dateMap.remove(aKey);
+                    isRemovedDate = true;
                    }
                 }
         }
@@ -217,29 +218,46 @@ public class FileSystem {
     // This method should remove a certain file with the given name and directory. 
     // Return true if success, false otherwise.
     public boolean removeFile(String name, String directory) {
-        boolean isNameRemoved = removeByName(name);
 
         boolean isRemovedDate = false;
-        boolean isRemovedName = dateMap.remove(directory);
+        boolean isRemovedName = false;
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
+        ArrayList<String> allDates = new ArrayList<String>(dateMap.keys());
 
+        // removing in nameMap
         for (int i = 0; i < allNames.size(); i++) {
-            String aKey = allNames.get(i);
-            ArrayList<FileData> someFiles = nameMap.get(aKey);
+            String keyName = allNames.get(i);
+            ArrayList<FileData> dataInKey = nameMap.get(keyName);
 
-                // if it does contain the key, loop through the object array that is its value
-                for (int j = 0; j < someFiles.size(); j++) {
-                    FileData someFile = someFiles.get(j);
-                   if (someFile.name.equals(directory)) {
-                        nameMap.remove(aKey);
-                       isRemovedDate = true;
-                   }
+            for (int j = 0; j < dataInKey.size(); j++) {
+                FileData currentKey = dataInKey.get(j);
+
+                if(keyName.equals(name) && currentKey.dir.equals(directory)) {
+                    nameMap.remove(keyName);
+                    isRemovedName = true;
                 }
+
+            }
+
+        }
+        // removing in dateMap
+        for (int i = 0; i < allDates.size(); i++) {
+            String keyName = allDates.get(i);
+            ArrayList<FileData> dataInKey = dateMap.get(keyName);
+
+            for (int j = 0; j < dataInKey.size(); j++) {
+                FileData currentKey = dataInKey.get(j);
+
+                if(currentKey.name.equals(name) && currentKey.dir.equals(directory)) {
+                    dateMap.remove(keyName);
+                    isRemovedDate = true;
+                }
+
+            }
+
         }
 
-        boolean isDateRemoved =  isRemovedDate && isRemovedName;
-
-        return isDateRemoved && isNameRemoved;
+        return isRemovedName && isRemovedDate;
     }
 
 }

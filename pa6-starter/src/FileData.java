@@ -13,7 +13,7 @@ public class FileData {
 
     // TOD
     public String toString() {
-        String newString = "{Name: " + name + ", Directory: " + dir +", Modified Date: "+ lastModifiedDate +"}.";
+        String newString = "{Name: " + name + ", Directory: " + dir +", Modified Date: "+ lastModifiedDate +"}";
         return newString;
 
     }
