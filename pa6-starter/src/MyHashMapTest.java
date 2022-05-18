@@ -39,6 +39,12 @@ public class MyHashMapTest {
 		Collections.sort(resultKeys);
 		assertEquals(expectedKeys, resultKeys);
 	}
+        @Test 
+        public void testGet_nonEmptyMap(){
+            testMap.put(TEST_KEY, TEST_VAL);
+            String gottenVal = testMap.get(TEST_KEY);
+            assertEquals(gottenVal, TEST_VAL);
+        }
 	
 	/* Add more of your tests below */
 	

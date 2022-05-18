@@ -14,6 +14,9 @@ public class FileSystem {
         this.nameMap = new MyHashMap();
         this.dateMap = new MyHashMap();
     }
+    public FileSystem(File inputFile){
+        this(inputFile.getAbsolutePath());
+    }
 
     // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
     public FileSystem(String inputFile) {

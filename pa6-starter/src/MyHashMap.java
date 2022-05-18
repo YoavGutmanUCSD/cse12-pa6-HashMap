@@ -1,6 +1,7 @@
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.lang.Math;
 
 
 // ADD HEADER COMMENTS :(
@@ -53,7 +54,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
-            int keyHash = Objects.hashCode(key); 
+            int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
             if (get(key) == null){
                 // value to insert stored in HashMapEntry
@@ -71,10 +72,12 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
+            // remove(key);
+            // put(key, newValue);
             if(get(key) == null) {
                 return false;
             }
-            int keyHash = Objects.hashCode(key); 
+            int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
             // this should run only once for the majority of cases. Average O(1), worst case O(n).
             for(HashMapEntry e: buckets[index]){
@@ -94,7 +97,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if(get(key) == null) {
                 return false;
             }
-            int keyHash = Objects.hashCode(key); 
+            int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
             for(HashMapEntry e: buckets[index]){
                 if(e.getKey().equals(key)){
@@ -125,8 +128,10 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
-            int keyHash = Objects.hashCode(key); 
+            int keyHash = Math.abs(Objects.hashCode(key)); 
+            System.out.format("%s", keyHash);
             int index = keyHash % capacity;
+            System.out.format("%s", index);
             // loop runs only once on average
             if(buckets[index] != null) {
                 for(int i = 0; i < buckets[index].size(); i++){
