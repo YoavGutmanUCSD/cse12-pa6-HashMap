@@ -57,11 +57,41 @@ public class FileSystem {
         FileData oneFile = new FileData(fileName, directory, modifiedDate);
         someFiles.add(oneFile);
 
-        // add the file to the filesystem..
-        boolean inNameMap = nameMap.put(oneFile.name, someFiles);
-        boolean inDateMap = dateMap.put(oneFile.lastModifiedDate, someFiles);
+        boolean inNameMap = false;
+        boolean inDateMap = false;
 
-        return inNameMap && inDateMap;
+        boolean flag = false;
+
+        // no duplicates!
+
+        // if it already exists, i need to add it to the alraedy existing key's values
+        if(nameMap.keys().contains(fileName)) {
+            ArrayList<FileData> moreFiles = nameMap.get(fileName);
+            for (int i = 0; i < moreFiles.size(); i++) {
+                if(moreFiles.get(i).dir != oneFile.dir) {
+                    nameMap.get(fileName).add(oneFile);
+                }
+            }
+            flag = true;
+        } 
+        // otherwise, i'll just make a new key and add it
+        else {
+            inNameMap = nameMap.put(oneFile.name, someFiles);
+        }
+
+
+        // if it already exists, i need to add it to the alraedy existing key's values
+        if(dateMap.keys().contains(modifiedDate)) {
+            dateMap.get(modifiedDate).add(oneFile);
+            flag=true;
+        } 
+        // otherwise, i'll just make a new key and add it
+        else {
+            inDateMap = dateMap.put(oneFile.lastModifiedDate, someFiles);
+        }
+
+        // true if it didnt exist previously, false otherwise
+        return inNameMap && inDateMap && !flag;
 
     }
 
@@ -191,7 +221,8 @@ public class FileSystem {
 
     }
 
-    // This method should remove all the files with the given name in the FileSystem. Return true if success, false otherwise
+    // This method should remove all the files with the given name in the FileSystem. 
+    // Return true if success, false otherwise
     public boolean removeByName(String name) {
         boolean isRemovedDate = false;
         boolean isRemovedName = nameMap.remove(name);
@@ -207,7 +238,7 @@ public class FileSystem {
                 for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
                    if (someFile.name.equals(name)) {
-                    dateMap.remove(aKey);
+                       dateMap.remove(aKey);
                     isRemovedDate = true;
                    }
                 }
@@ -219,7 +250,6 @@ public class FileSystem {
     // This method should remove a certain file with the given name and directory. 
     // Return true if success, false otherwise.
     public boolean removeFile(String name, String directory) {
-
         boolean isRemovedDate = false;
         boolean isRemovedName = false;
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
@@ -234,10 +264,14 @@ public class FileSystem {
                 FileData currentKey = dataInKey.get(j);
 
                 if(keyName.equals(name) && currentKey.dir.equals(directory)) {
-                    nameMap.remove(keyName);
+                    nameMap.get(keyName).remove(j);
                     isRemovedName = true;
                 }
 
+            }
+            if (nameMap.get(keyName).isEmpty()) {
+                nameMap.remove(keyName);
+                isRemovedName = true;
             }
 
         }
@@ -250,10 +284,15 @@ public class FileSystem {
                 FileData currentKey = dataInKey.get(j);
 
                 if(currentKey.name.equals(name) && currentKey.dir.equals(directory)) {
-                    dateMap.remove(keyName);
+                    dateMap.get(keyName).remove(j);
                     isRemovedDate = true;
                 }
 
+            }
+
+            if (dateMap.get(keyName).isEmpty()) {
+                dateMap.remove(keyName);
+                isRemovedDate = true;
             }
 
         }
