@@ -129,9 +129,11 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             int index = keyHash % capacity;
             // loop runs only once on average
             if(buckets[index] != null) {
-                for(HashMapEntry e: buckets[index]){
-                    if (e.getKey().equals(key)) {
-                        return (V) e.getValue();
+                for(int i = 0; i < buckets[index].size(); i++){
+                    HashMapEntry currEntry = buckets[index].get(i);
+                    K keyValue = (K) currEntry.getKey();
+                    if (keyValue.equals(key)) {
+                        return (V) currEntry.getValue();
                     }
 
                 }
