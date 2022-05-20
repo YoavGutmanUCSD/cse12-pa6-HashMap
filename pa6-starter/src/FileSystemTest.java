@@ -15,9 +15,13 @@ public class FileSystemTest {
 
         FileSystem newFileSystem = new FileSystem(input);
 
-        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/06/2021");
-        
-        assertEquals(filesByDate.size(), 1);
+        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/01/2021");
+        // for (int i = 0 ; i < filesByDate.size(); i++) {
+        //     System.out.println("\n hi" + filesByDate.get(i).name);
+        // }
+        //System.out.println(filesByDate.size());
+
+        assertEquals(filesByDate.size(), 2);
 
     }
 
@@ -29,7 +33,11 @@ public class FileSystemTest {
 
         newFileSystem.removeFile("mySample.txt", "02/06/2021");
         
-        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/06/2021");
+        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/01/2021");
+
+        for (int i = 0 ; i < filesByDate.size(); i++) {
+            System.out.println("\n hi" + filesByDate.get(i).name);
+        }
 
         assertEquals(filesByDate.size(), 2);
 
