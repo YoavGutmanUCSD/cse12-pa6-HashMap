@@ -25,7 +25,7 @@ public class FileSystem {
         try {
             File f = new File(inputFile);
             Scanner sc = new Scanner(f);
-            // ArrayList<FileData> someFiles = new ArrayList<FileData>();
+            ArrayList<FileData> someFiles = new ArrayList<FileData>();
             // each line contains the file's info
             while (sc.hasNextLine()) {
                 // System.out.println("bruh " + someFiles.size());
@@ -34,13 +34,13 @@ public class FileSystem {
                 // System.out.println(data);
 
                 // adding this file's info to the filesystem
-                // FileData oneFile = new FileData(data[0], data[1], data[2]);
+                FileData oneFile = new FileData(data[0], data[1], data[2]);
                 // for (int i = 0; i < someFiles.size(); i++) {
                 //     if (someFiles.get(i).name == oneFile.name && someFiles.get(i).lastModifiedDate == oneFile.lastModifiedDate && someFiles.get(i).dir == oneFile.dir) {
                 //         continue;
                 //     }
                 // }
-                // someFiles.add(oneFile);
+                someFiles.add(oneFile);
                 add(data[0], data[1], data[2]);
 
                 // each map gets one!
@@ -49,6 +49,7 @@ public class FileSystem {
                 //System.out.format("name: date\n%s: %s\n", oneFile.name, nameMap.get(oneFile.name));
                 //System.out.println(nameMap.keys());
             }
+            //System.out.println("ok" + findFilesByDate());
             sc.close();
 
         } catch (FileNotFoundException e) {
