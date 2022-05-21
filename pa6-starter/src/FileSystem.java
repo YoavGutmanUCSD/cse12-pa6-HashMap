@@ -25,22 +25,29 @@ public class FileSystem {
         try {
             File f = new File(inputFile);
             Scanner sc = new Scanner(f);
-
+            // ArrayList<FileData> someFiles = new ArrayList<FileData>();
             // each line contains the file's info
             while (sc.hasNextLine()) {
+                // System.out.println("bruh " + someFiles.size());
                 String nextLine = sc.nextLine();
                 String[] data = nextLine.split(", ");
                 // System.out.println(data);
 
                 // adding this file's info to the filesystem
-                ArrayList<FileData> someFiles = new ArrayList<FileData>();
-                FileData oneFile = new FileData(data[0], data[1], data[2]);
-                someFiles.add(oneFile);
+                // FileData oneFile = new FileData(data[0], data[1], data[2]);
+                // for (int i = 0; i < someFiles.size(); i++) {
+                //     if (someFiles.get(i).name == oneFile.name && someFiles.get(i).lastModifiedDate == oneFile.lastModifiedDate && someFiles.get(i).dir == oneFile.dir) {
+                //         continue;
+                //     }
+                // }
+                // someFiles.add(oneFile);
+                add(data[0], data[1], data[2]);
 
                 // each map gets one!
-                nameMap.put(oneFile.name, someFiles);
-                dateMap.put(oneFile.lastModifiedDate, someFiles);
-                System.out.format("name: date\n%s: %s\n", oneFile.name, nameMap.get(oneFile.name));
+                // nameMap.put(oneFile.name, someFiles);
+                // dateMap.put(oneFile.lastModifiedDate, someFiles);
+                //System.out.format("name: date\n%s: %s\n", oneFile.name, nameMap.get(oneFile.name));
+                //System.out.println(nameMap.keys());
             }
             sc.close();
 
@@ -167,30 +174,33 @@ public class FileSystem {
         ArrayList<FileData> returnable = new ArrayList<FileData>();
 
         ArrayList<String> allNames = new ArrayList<String>(nameMap.keys());
-
         // first checking if the filesystem contains this key
         if(dateMap.containsKey(modifiedDate)) {
 
             // if it does, i can use the nameMap and loop through the keys there
             // & check each date that matches modifiedDate
-            for (int i = 0; i < allNames.size(); i++) {
-                // System.out.println(allNames.size());
+            int theSize = allNames.size();
+            for (int i = 0; i < theSize; i++) {
                 // System.out.println("FIRST FOR");
                 String aKey = allNames.get(i);
                 ArrayList<FileData> someFiles = nameMap.get(aKey);
-
+                //System.out.println("lol" + someFiles.size());
+                
                 // for this key in nameMap, check its modifiedDate, see if it equals the same
                 for (int j = 0; j < someFiles.size(); j++) {
-                    // System.out.println(someFiles.size());
+                    System.out.println("lol" + someFiles.size());
                     // System.out.println("SECOND FOR");
                     FileData someFile = someFiles.get(j);
+                    System.out.println(someFile.name);
                     if (someFile.lastModifiedDate.equals(modifiedDate)) {
+                        //System.out.println("hi" + modifiedDate);
                         returnable.add(someFile); }
                 }
 
             }
 
         }
+        // System.out.println(returnable.size());
         return returnable;
     }
 
@@ -299,7 +309,6 @@ public class FileSystem {
             }
 
         }
-
         return isRemovedName && isRemovedDate;
     }
 
