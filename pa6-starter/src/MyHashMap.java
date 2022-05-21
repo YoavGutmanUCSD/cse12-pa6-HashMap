@@ -103,9 +103,11 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             }
             int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
-            for(HashMapEntry e: buckets[index]){
-                if(e.getKey().equals(key)){
-                    e = null;
+            for(int i = 0; i < buckets[index].size(); i++){
+            // for(HashMapEntry e: buckets[index]){
+                HashMapEntry entry = buckets[index].get(i);
+                if(entry.getKey().equals(key)){
+                    buckets[index].remove(i);
                     size--;
                     return true;
                 }
