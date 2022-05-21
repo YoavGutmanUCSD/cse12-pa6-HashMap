@@ -60,7 +60,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
                 throw new IllegalArgumentException("Value cannot be null.");
             int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
-            if (get(key) == null){
+            if (get(key) == null & value != null){
                 // value to insert stored in HashMapEntry
                 HashMapEntry valToInsert = new HashMapEntry(key, value);
                 buckets[index] = new LinkedList<HashMapEntry<K,V>>();
