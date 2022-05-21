@@ -25,7 +25,7 @@ public class FileSystem {
         try {
             File f = new File(inputFile);
             Scanner sc = new Scanner(f);
-            ArrayList<FileData> someFiles = new ArrayList<FileData>();
+            // ArrayList<FileData> someFiles = new ArrayList<FileData>();
             // each line contains the file's info
             while (sc.hasNextLine()) {
                 // System.out.println("bruh " + someFiles.size());
@@ -34,15 +34,14 @@ public class FileSystem {
                 // System.out.println(data);
 
                 // adding this file's info to the filesystem
-                FileData oneFile = new FileData(data[0], data[1], data[2]);
+                // FileData oneFile = new FileData(data[0], data[1], data[2]);
                 // for (int i = 0; i < someFiles.size(); i++) {
                 //     if (someFiles.get(i).name == oneFile.name && someFiles.get(i).lastModifiedDate == oneFile.lastModifiedDate && someFiles.get(i).dir == oneFile.dir) {
                 //         continue;
                 //     }
                 // }
-                someFiles.add(oneFile);
+                // someFiles.add(oneFile);
                 add(data[0], data[1], data[2]);
-
                 // each map gets one!
                 // nameMap.put(oneFile.name, someFiles);
                 // dateMap.put(oneFile.lastModifiedDate, someFiles);
@@ -78,7 +77,7 @@ public class FileSystem {
         // if it already exists, i need to add it to the alraedy existing key's values
         if(nameMap.keys().contains(fileName)) {
             ArrayList<FileData> moreFiles = nameMap.get(fileName);
-            for (int i = 0; i < moreFiles.size(); i++) {
+            for (int i = moreFiles.size()-1; i >= 0; i--) {
                 if(moreFiles.get(i).dir != oneFile.dir) {
                     nameMap.get(fileName).add(oneFile);
                 }
@@ -160,7 +159,7 @@ public class FileSystem {
                 // if it does contain the key, loop through the object array that is its value
                 for (int j = 0; j < someFiles.size(); j++) {
                     FileData someFile = someFiles.get(j);
-                    if (someFile.name.equals(name)) {
+                    if (someFile.name.equals(name) && !(returnable.contains(someFile))) {
                         returnable.add(someFile); }
                 }
 

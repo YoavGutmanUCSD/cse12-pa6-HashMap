@@ -17,11 +17,13 @@ public class FileSystemTest {
 
         ArrayList<String> testerArray = newFileSystem.findAllFilesName();
         ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/01/2021");
+        ArrayList<FileData> filesByName = newFileSystem.findFilesByName("mySample.txt");
         // for (int i = 0 ; i < filesByDate.size(); i++) {
         //     System.out.println("\n hi" + filesByDate.get(i).name);
         // }
         //System.out.println(filesByDate.size());
 
+        //assertEquals(filesByName.size(), 1);
         assertEquals(filesByDate.size(), 2);
         //assertEquals(testerArray.size(), 3);
 

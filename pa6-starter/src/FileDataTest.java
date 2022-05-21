@@ -8,7 +8,7 @@ public class FileDataTest {
     public void toStringTester() {
         FileData obj = new FileData("IAmAFile", "Path", "Today");
         //System.out.print(obj);
-        assertEquals("{Name: " + "IAmAFile" + ", Directory: " + "Path" +", Modified Date: "+ "Today" +"}.", obj.toString());
+        assertEquals("{Name: " + "IAmAFile" + ", Directory: " + "Path" +", Modified Date: "+ "Today" +"}", obj.toString());
     }
 
     @Test
