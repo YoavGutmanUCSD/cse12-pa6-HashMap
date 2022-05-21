@@ -85,7 +85,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             int index = keyHash % capacity;
             // this should run only once for the majority of cases. Average O(1), worst case O(n).
             for(HashMapEntry e: buckets[index]){
-                if (e.getKey().equals(key)) {
+                if (e.getKey().equals(key) || e == key) {
                     e.setValue(newValue);
                     return true;
                 }
