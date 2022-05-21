@@ -193,7 +193,7 @@ public class FileSystem {
                     // System.out.println("SECOND FOR");
                     FileData someFile = someFiles.get(j);
                     // System.out.println(someFile.name);
-                    if (someFile.lastModifiedDate.equals(modifiedDate)) {
+                    if (someFile.lastModifiedDate.equals(modifiedDate) && !(returnable.contains(someFile))) {
                         //System.out.println("hi" + modifiedDate);
                         returnable.add(someFile); }
                 }
