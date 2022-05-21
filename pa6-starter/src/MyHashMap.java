@@ -36,7 +36,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	@SuppressWarnings("unchecked")
 	public MyHashMap(int initialCapacity, double loadFactor) throws IllegalArgumentException {
             // TODO Finish initializing instance fields
-            if(initialCapacity < 0 || loadFactor < 0) {
+            if(initialCapacity < 0 || loadFactor <= 0) {
                 throw new IllegalArgumentException("initialCapacity and loadFactor have to be greater than 0.");
             }
             this.capacity = initialCapacity;
