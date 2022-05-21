@@ -106,7 +106,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             for(int i = 0; i < buckets[index].size(); i++){
             // for(HashMapEntry e: buckets[index]){
                 HashMapEntry entry = buckets[index].get(i);
-                if(entry.getKey().equals(key)){
+                if(entry.getKey().equals(key) || entry == key){
                     buckets[index].remove(i);
                     size--;
                     return true;
