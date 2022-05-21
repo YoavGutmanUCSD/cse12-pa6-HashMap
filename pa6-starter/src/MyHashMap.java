@@ -35,16 +35,18 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	 */
 	@SuppressWarnings("unchecked")
 	public MyHashMap(int initialCapacity, double loadFactor) throws IllegalArgumentException {
-		// TODO Finish initializing instance fields
+            // TODO Finish initializing instance fields
+            if(initialCapacity < 0 || loadFactor < 0) {
+                throw new IllegalArgumentException("initialCapacity and loadFactor have to be greater than 0.");
+            }
+            this.capacity = initialCapacity;
+            this.size = 0;
+            this.loadFactor = loadFactor;
+            // if you use Separate Chaining
+            buckets = (List<HashMapEntry<K, V>>[]) new LinkedList[capacity];
 
-		// if you use Separate Chaining
-                this.capacity = initialCapacity;
-                this.size = 0;
-                this.loadFactor = loadFactor;
-		buckets = (List<HashMapEntry<K, V>>[]) new LinkedList[capacity];
-
-		// // if you use Linear Probing (i won't)
-		// entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+            // // if you use Linear Probing (i won't)
+            // entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
 	}
 
 	@Override
@@ -54,6 +56,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
+            if (value == null) 
+                throw new IllegalArgumentException("Value cannot be null.");
             int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
             if (get(key) == null){
@@ -140,7 +144,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
                     if (keyValue.equals(key)) {
                         return (V) currEntry.getValue();
                     }
-
                 }
             }
             return null;
