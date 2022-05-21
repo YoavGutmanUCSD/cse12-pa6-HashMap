@@ -188,10 +188,10 @@ public class FileSystem {
                 
                 // for this key in nameMap, check its modifiedDate, see if it equals the same
                 for (int j = 0; j < someFiles.size(); j++) {
-                    System.out.println("lol" + someFiles.size());
+                    // System.out.println("lol" + someFiles.size());
                     // System.out.println("SECOND FOR");
                     FileData someFile = someFiles.get(j);
-                    System.out.println(someFile.name);
+                    // System.out.println(someFile.name);
                     if (someFile.lastModifiedDate.equals(modifiedDate)) {
                         //System.out.println("hi" + modifiedDate);
                         returnable.add(someFile); }
