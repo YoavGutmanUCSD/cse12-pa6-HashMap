@@ -6,24 +6,87 @@ import java.util.Scanner;
 // This class will be used to represent the entire structure of the file system.
 public class FileSystem {
 
-    MyHashMap<String, ArrayList<FileData>> nameMap;
-    MyHashMap<String, ArrayList<FileData>> dateMap;
+    MyHashMap<String, ArrayList<FileData>> nameMap = new MyHashMap();
+    MyHashMap<String, ArrayList<FileData>> dateMap = new MyHashMap();
 
     // Default constructor that creates a new FileSystem object and initializes its instance variable.
     public FileSystem() {
         this.nameMap = new MyHashMap();
         this.dateMap = new MyHashMap();
     }
-    public FileSystem(File inputFile){
-        this(inputFile.getAbsolutePath());
-    }
+    // public FileSystem(File inputFile){
+    //     this(inputFile.getAbsolutePath());
+    // }
 
     // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
     public FileSystem(String inputFile) {
-        this.nameMap = new MyHashMap();
-        this.dateMap = new MyHashMap();
+        // this.nameMap = new MyHashMap();
+        // this.dateMap = new MyHashMap();
         try {
-            File f = new File(inputFile);
+            // "src/" + 
+            //String input = new File(inputFile).getAbsolutePath();
+
+            // NEED TO FIND THE FILE that is nested in a bunch of OTHER files.
+            // String orgInput = new File(inputFile).getAbsoluteFile().getAbsolutePath();
+            // String strDir = orgInput.replace("\\" + inputFile,"");
+            File z = new File(inputFile);
+            String strDir = z.getAbsoluteFile().getParent();
+            File fileDir = new File(strDir);
+            String[] fLst = fileDir.list();
+
+            if (fLst != null) {
+
+            for (int i = 0; i < fLst.length; i++) {
+                String filename = fLst[i];
+                // System.out.println(filename);
+                
+                String strDirectory = new File(filename).getAbsolutePath();
+                //System.out.println(strDirectory);
+                File directory = new File(strDirectory);
+                
+                if (directory.isDirectory()) {
+                    if (filename.charAt(0) == '.') {
+                        continue;
+                    }
+                    //System.out.println(filename);
+                    String[] fLst2 = directory.list();
+                    // System.out.println(fLst2[7]);
+                    for (int j = 0; j < fLst2.length; j++) {
+                        String filename2 = fLst2[j];
+                        //System.out.println(filename2);
+                        if (filename2.equalsIgnoreCase(inputFile)) {
+                            //System.out.println(filename2 + " found");
+
+                            strDir = strDirectory +"\\" + filename2;
+                            //System.out.println(strDir);
+
+                            break;
+
+
+                        }
+
+                    }
+
+                }
+            } 
+        } 
+        // else {
+        //     strDir = orgInput;
+        // }
+
+            File f = new File(strDir);
+            // File z = new File(inputFile);
+
+            // File parentDir = z.getAbsoluteFile().getParentFile();
+            // String parentDirName = z.getAbsoluteFile().getParent();
+            
+            // System.out.println(parentDirName);
+
+            // File f = new File(parentDirName + "/" + inputFile);
+
+            
+
+
             Scanner sc = new Scanner(f);
             // ArrayList<FileData> someFiles = new ArrayList<FileData>();
             // each line contains the file's info
@@ -312,4 +375,25 @@ public class FileSystem {
         return isRemovedName && isRemovedDate;
     }
 
+    // HELPER METHOD
+public void walk( String path ) {
+
+    File root = new File( path );
+    File[] list = root.listFiles();
+
+    if (list == null) return;
+
+    for ( File f : list ) {
+        if ( f.isDirectory() ) {
+            walk( f.getAbsolutePath() );
+            System.out.println( "Dir:" + f.getAbsoluteFile() );
+        }
+        else {
+            System.out.println( "File:" + f.getAbsoluteFile() );
+            }
+        }
+    }
+
 }
+
+

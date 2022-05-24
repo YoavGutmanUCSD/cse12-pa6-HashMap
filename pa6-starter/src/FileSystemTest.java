@@ -11,7 +11,8 @@ public class FileSystemTest {
 
     @Test
     public void properAdding() {
-        String input = new File("src/input.txt").getAbsolutePath();
+        //String input = new File("src/input.txt").getAbsolutePath();
+        String input = "input.txt";
 
         FileSystem newFileSystem = new FileSystem(input);
 
@@ -23,15 +24,16 @@ public class FileSystemTest {
         // }
         //System.out.println(filesByDate.size());
 
-        //assertEquals(filesByName.size(), 1);
-        assertEquals(filesByDate.size(), 2);
+        assertEquals(filesByName.size(), 2);
+        //assertEquals(filesByDate.size(), 2);
         //assertEquals(testerArray.size(), 3);
 
     }
 
     @Test
     public void properRemoval() {
-        String input = new File("src/input.txt").getAbsolutePath();
+        //String input = new File("src/input.txt").getAbsolutePath();
+        String input = "input.txt";
 
         FileSystem newFileSystem = new FileSystem(input);
 
@@ -50,7 +52,8 @@ public class FileSystemTest {
 
     @Test
     public void canYouGetTheseNames() {
-        String input = new File("src/input.txt").getAbsolutePath();
+        //String input = new File("src/input.txt").getAbsolutePath();
+        String input = "input.txt";
 
         FileSystem newFileSystem = new FileSystem(input);
 
