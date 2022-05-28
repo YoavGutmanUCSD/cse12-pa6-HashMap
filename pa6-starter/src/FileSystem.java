@@ -20,8 +20,8 @@ public class FileSystem {
 
     // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
     public FileSystem(String inputFile) {
-        // this.nameMap = new MyHashMap();
-        // this.dateMap = new MyHashMap();
+        this.nameMap = new MyHashMap();
+        this.dateMap = new MyHashMap();
         try {
             // "src/" + 
             //String input = new File(inputFile).getAbsolutePath();
@@ -58,7 +58,7 @@ public class FileSystem {
                             //System.out.println(filename2 + " found");
 
                             strDir = strDirectory +"\\" + filename2;
-                            //System.out.println(strDir);
+                            // System.out.println(strDir);
 
                             break;
 
