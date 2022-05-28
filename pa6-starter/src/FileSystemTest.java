@@ -12,12 +12,12 @@ public class FileSystemTest {
     @Test
     public void properAdding() {
         //String input = new File("src/input.txt").getAbsolutePath();
-        String input = "input.txt";
+        String input = "src/input.txt";
 
         FileSystem newFileSystem = new FileSystem(input);
 
         ArrayList<String> testerArray = newFileSystem.findAllFilesName();
-        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/01/2021");
+        ArrayList<FileData> filesByDate = newFileSystem.findFilesByDate("02/01/2021"); // check duplicate dates 
         ArrayList<FileData> filesByName = newFileSystem.findFilesByName("mySample.txt");
         // for (int i = 0 ; i < filesByDate.size(); i++) {
         //     System.out.println("\n hi" + filesByDate.get(i).name);
