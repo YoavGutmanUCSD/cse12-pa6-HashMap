@@ -23,12 +23,6 @@ public class FileSystem {
         this.nameMap = new MyHashMap();
         this.dateMap = new MyHashMap();
         try {
-            // "src/" + 
-            //String input = new File(inputFile).getAbsolutePath();
-
-            // NEED TO FIND THE FILE that is nested in a bunch of OTHER files.
-            // String orgInput = new File(inputFile).getAbsoluteFile().getAbsolutePath();
-            // String strDir = orgInput.replace("\\" + inputFile,"");
             File z = new File(inputFile);
             String strDir = z.getAbsoluteFile().getParent();
             File fileDir = new File(strDir);
