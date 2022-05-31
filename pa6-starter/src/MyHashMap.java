@@ -56,12 +56,10 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
-            if (value == null) 
-                throw new IllegalArgumentException("Value cannot be null.");
             int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
-            // should probably remove the != null ...
-            if (get(key) == null & value != null){
+            // should probably remove the != null ... I HAVE REMOVED IT
+            if (get(key) == null){
                 // value to insert stored in HashMapEntry
                 HashMapEntry valToInsert = new HashMapEntry(key, value);
                 buckets[index] = new LinkedList<HashMapEntry<K,V>>();
@@ -99,11 +97,10 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
             }
-            if(get(key) == null) {
-                return false;
-            }
             int keyHash = Math.abs(Objects.hashCode(key)); 
             int index = keyHash % capacity;
+
+            try {
             for(int i = 0; i < buckets[index].size(); i++){
             // for(HashMapEntry e: buckets[index]){
                 HashMapEntry entry = buckets[index].get(i);
@@ -113,6 +110,9 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
                     return true;
                 }
             }
+        } catch (Exception e) {
+            return false;
+        }
             return false;
 	}
 

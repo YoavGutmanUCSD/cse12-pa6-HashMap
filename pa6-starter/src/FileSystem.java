@@ -81,7 +81,7 @@ public class FileSystem {
             
 
 
-            Scanner sc = new Scanner(f);
+            Scanner sc = new Scanner(z);
             // ArrayList<FileData> someFiles = new ArrayList<FileData>();
             // each line contains the file's info
             while (sc.hasNextLine()) {
