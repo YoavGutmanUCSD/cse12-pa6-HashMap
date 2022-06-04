@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 // This class will be used to represent the entire structure of the file system.
+////////////////////////////////////////////////////////////////////////////////////////////////////
 public class FileSystem {
 
     MyHashMap<String, ArrayList<FileData>> nameMap = new MyHashMap();
@@ -19,6 +20,7 @@ public class FileSystem {
     // }
 
     // Constructor that creates a new FileSystem object with the given inputFile that contains the file system information
+    // String inputFile: file to read
     public FileSystem(String inputFile) {
         this.nameMap = new MyHashMap();
         this.dateMap = new MyHashMap();
@@ -30,55 +32,55 @@ public class FileSystem {
 
             if (fLst != null) {
 
-            for (int i = 0; i < fLst.length; i++) {
-                String filename = fLst[i];
-                // System.out.println(filename);
-                
-                String strDirectory = new File(filename).getAbsolutePath();
-                //System.out.println(strDirectory);
-                File directory = new File(strDirectory);
-                
-                if (directory.isDirectory()) {
-                    if (filename.charAt(0) == '.') {
-                        continue;
-                    }
-                    //System.out.println(filename);
-                    String[] fLst2 = directory.list();
-                    // System.out.println(fLst2[7]);
-                    for (int j = 0; j < fLst2.length; j++) {
-                        String filename2 = fLst2[j];
-                        //System.out.println(filename2);
-                        if (filename2.equalsIgnoreCase(inputFile)) {
-                            //System.out.println(filename2 + " found");
+                for (int i = 0; i < fLst.length; i++) {
+                    String filename = fLst[i];
+                    // System.out.println(filename);
 
-                            strDir = strDirectory +"\\" + filename2;
-                            // System.out.println(strDir);
+                    String strDirectory = new File(filename).getAbsolutePath();
+                    //System.out.println(strDirectory);
+                    File directory = new File(strDirectory);
 
-                            break;
+                    if (directory.isDirectory()) {
+                        if (filename.charAt(0) == '.') {
+                            continue;
+                        }
+                        //System.out.println(filename);
+                        String[] fLst2 = directory.list();
+                        // System.out.println(fLst2[7]);
+                        for (int j = 0; j < fLst2.length; j++) {
+                            String filename2 = fLst2[j];
+                            //System.out.println(filename2);
+                            if (filename2.equalsIgnoreCase(inputFile)) {
+                                //System.out.println(filename2 + " found");
 
+                                strDir = strDirectory +"\\" + filename2;
+                                // System.out.println(strDir);
+
+                                break;
+
+
+                            }
 
                         }
 
                     }
-
-                }
+                } 
             } 
-        } 
-        // else {
-        //     strDir = orgInput;
-        // }
+            // else {
+            //     strDir = orgInput;
+            // }
 
             File f = new File(strDir);
             // File z = new File(inputFile);
 
             // File parentDir = z.getAbsoluteFile().getParentFile();
             // String parentDirName = z.getAbsoluteFile().getParent();
-            
+
             // System.out.println(parentDirName);
 
             // File f = new File(parentDirName + "/" + inputFile);
 
-            
+
 
 
             Scanner sc = new Scanner(z);
@@ -113,11 +115,14 @@ public class FileSystem {
         }
     }
 
-    // This method should create a FileData object with the given file information and 
-    // add it to the instance variables of FileSystem. 
-
-    // This method should return true if the file is successfully added to the FileSystem, and 
+    // This method creates a FileData object with the given file information and 
+    // adds it to the instance variables of FileSystem. 
+    // It returns true if the file is successfully added to the FileSystem, and 
     // false if a file with the same name already exists in that directory
+    //
+    // String fileName: name of file to add
+    // String directory: directory of file to add
+    // String modifiedDate: the date of the last modification to this file
     public boolean add(String fileName, String directory, String modifiedDate) {
         // make the file..
         ArrayList<FileData> someFiles = new ArrayList<FileData>();
@@ -163,6 +168,12 @@ public class FileSystem {
     }
 
     // This method should return a single FileData object with the given name and directory
+    // 
+    /* This method searches the file system for the file with the given criteria,
+     * and returns the results. Returns null if nothing is found.
+     * String name: file name
+     * String directory: path to file directory
+     */
     public FileData findFile(String name, String directory) {
         ArrayList<String> allDates = new ArrayList<String>(dateMap.keys());
 
@@ -199,8 +210,13 @@ public class FileSystem {
         return allNames;
     }
 
-    // The find method should return a list of FileData with the given name. 
-    // Should not modify the FileSystem itself. Return an empty list if such a file does not exist.
+    /* This method takes a name and returns an ArrayList containing all of the files 
+     * with the given name.
+     *
+     * String name: name of file.
+     * Return value: ArrayList of all FileData objects with name as given.
+     * The return value will be an empty list if no objects have the given name.
+     */
     public ArrayList<FileData> findFilesByName(String name) {
         ArrayList<FileData> returnable = new ArrayList<FileData>();
 
@@ -227,6 +243,13 @@ public class FileSystem {
     }
 
     // This find method should return a list of FileData with the given modifiedDate.
+    /* This method takes a modification date and returns an ArrayList containing all of the files 
+     * with the given modification date.
+     *
+     * String modifiedDate: modification date of file.
+     * Return value: ArrayList of all FileData objects with modification date as given.
+     * The return value will be an empty list if no objects have the given modification date.
+     */
     public ArrayList<FileData> findFilesByDate(String modifiedDate) {
         ArrayList<FileData> returnable = new ArrayList<FileData>();
 
@@ -242,7 +265,7 @@ public class FileSystem {
                 String aKey = allNames.get(i);
                 ArrayList<FileData> someFiles = nameMap.get(aKey);
                 //System.out.println("lol" + someFiles.size());
-                
+
                 // for this key in nameMap, check its modifiedDate, see if it equals the same
                 for (int j = 0; j < someFiles.size(); j++) {
                     // System.out.println("lol" + someFiles.size());
@@ -261,8 +284,13 @@ public class FileSystem {
         return returnable;
     }
 
-    // This find method should return a list of FileData with the given modifiedDate that has at least another 
-    // file with the same file name in a different directory
+    /* This method returns the list of files that have the same name, are in multiple directories,
+     * and have the given modification date.
+     *
+     * String modifiedDate: modification date of file.
+     * Return value: ArrayList of all FileData objects in multiple directories with given date
+     * The return value will be an empty list if no objects meet the criteria.
+     */
     public ArrayList<FileData> findFilesInMultDir(String modifiedDate) {
         ArrayList<FileData> filesByDate = findFilesByDate(modifiedDate);
         ArrayList<FileData> returnable = new ArrayList<FileData>();
@@ -271,17 +299,17 @@ public class FileSystem {
             FileData firstLoopFile = filesByDate.get(i);
             String firstLoopFileName = firstLoopFile.name;
             String firstLoopFileDir = firstLoopFile.dir;
-            
+
             for (int j = 0; j < filesByDate.size(); j++) {
                 FileData secondLoopFile = filesByDate.get(j);
                 String secondLoopFileName = secondLoopFile.name;
                 String secondLoopFileDir = secondLoopFile.dir;
 
                 if(firstLoopFileName.equals(secondLoopFileName) && 
-                    firstLoopFileDir != secondLoopFileDir && 
-                    !returnable.contains(secondLoopFile)) { 
-                        returnable.add(secondLoopFile);
-                }
+                        firstLoopFileDir != secondLoopFileDir && 
+                        !returnable.contains(secondLoopFile)) { 
+                    returnable.add(secondLoopFile);
+                        }
 
             }
 
@@ -304,14 +332,14 @@ public class FileSystem {
             String aKey = allDateMapKeys.get(i);
             ArrayList<FileData> someFiles = dateMap.get(aKey);
 
-                // if this key has the specified name, REMOVE IT
-                for (int j = 0; j < someFiles.size(); j++) {
-                    FileData someFile = someFiles.get(j);
-                   if (someFile.name.equals(name)) {
-                       dateMap.remove(aKey);
+            // if this key has the specified name, REMOVE IT
+            for (int j = 0; j < someFiles.size(); j++) {
+                FileData someFile = someFiles.get(j);
+                if (someFile.name.equals(name)) {
+                    dateMap.remove(aKey);
                     isRemovedDate = true;
-                   }
                 }
+            }
         }
 
         return (isRemovedDate && isRemovedName);
@@ -369,21 +397,23 @@ public class FileSystem {
         return isRemovedName && isRemovedDate;
     }
 
-    // HELPER METHOD
-public void walk( String path ) {
+    // Walk through all files in this directory and print out the file name. 
+    // Print "Dir: {file}" if the file is a directory, and run the function on the remainder
+    // Print "File: {file}" if the file is not a directory, and do nothing else.
+    public void walk( String path ) {
 
-    File root = new File( path );
-    File[] list = root.listFiles();
+        File root = new File( path );
+        File[] list = root.listFiles();
 
-    if (list == null) return;
+        if (list == null) return;
 
-    for ( File f : list ) {
-        if ( f.isDirectory() ) {
-            walk( f.getAbsolutePath() );
-            System.out.println( "Dir:" + f.getAbsoluteFile() );
-        }
-        else {
-            System.out.println( "File:" + f.getAbsoluteFile() );
+        for ( File f : list ) {
+            if ( f.isDirectory() ) {
+                walk( f.getAbsolutePath() );
+                System.out.println( "Dir:" + f.getAbsoluteFile() );
+            }
+            else {
+                System.out.println( "File:" + f.getAbsoluteFile() );
             }
         }
     }

@@ -37,7 +37,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public MyHashMap(int initialCapacity, double loadFactor) throws IllegalArgumentException {
             // TODO Finish initializing instance fields
             if(initialCapacity < 0 || loadFactor <= 0) {
-                throw new IllegalArgumentException("initialCapacity and loadFactor have to be greater than 0.");
+                String message = "initialCapacity and loadFactor have to be greater than 0.";
+                throw new IllegalArgumentException(message);
             }
             this.capacity = initialCapacity;
             this.size = 0;
@@ -50,6 +51,10 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        /* This method adds a value to the map with the (key, value) pair.
+         * K key: key to refer to the value with, and to hash
+         * V value: value to refer to with the key.
+         */
 	public boolean put(K key, V value) throws IllegalArgumentException {
             // hashing information
             // can also use key.hashCode() assuming key is not null
@@ -70,6 +75,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
             return false;
 	}
 
+        // Replace original value at key with a new value.
+        // Return true if successful, false otherwise.
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
             if (key == null) {
@@ -93,6 +100,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        // Remove the (key, value) pair associated with the key given as input.
+        // Return true if successful, false otherwise.
 	public boolean remove(K key) throws IllegalArgumentException {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
@@ -117,6 +126,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        // Set a key to a value. Add new one if not already there, otherwise replace the original value.
 	public void set(K key, V value) throws IllegalArgumentException {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
@@ -131,6 +141,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        // Return the value associated with the key given as input. Return null if key is not in hash table.
 	public V get(K key) throws IllegalArgumentException {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
@@ -163,6 +174,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        // Return true if the key is in the hash map, false otherwise
 	public boolean containsKey(K key) throws IllegalArgumentException {
             if (key == null) {
                 throw new IllegalArgumentException("Key cannot be null.");
@@ -173,6 +185,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	}
 
 	@Override
+        // return a list with every key in the hash map. Takes no input.
 	public List<K> keys() {
             List<K> allKeys = new LinkedList<K>();
             for(List<HashMapEntry<K,V>> e: buckets){
